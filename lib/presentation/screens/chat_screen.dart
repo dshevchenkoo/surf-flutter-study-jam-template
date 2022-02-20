@@ -39,7 +39,7 @@ class ChatScreen extends ElementaryWidget<IChatScreenWidgetModel> {
           },
           builder: (_, List<ChatMessageDto>? data) {
             return Padding(
-              padding: const EdgeInsets.only(bottom: 50.0),
+              padding: const EdgeInsets.only(bottom: 70.0),
               child: ListView.builder(
                 reverse: true,
                 controller: wm.listViewController,
