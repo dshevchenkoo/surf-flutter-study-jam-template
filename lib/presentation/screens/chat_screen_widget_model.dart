@@ -1,6 +1,7 @@
 import 'package:elementary/elementary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rive/rive.dart';
 import 'package:surf_practice_chat_flutter/data/chat/models/message.dart';
 import 'package:surf_practice_chat_flutter/presentation/screens/chat_screen.dart';
 import 'package:surf_practice_chat_flutter/presentation/screens/chat_screen_model.dart';
@@ -18,6 +19,7 @@ class ChatScreenWidgetModel extends WidgetModel<ChatScreen, ChatScreenModel>
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _msgController = TextEditingController();
   final ScrollController _listViewController = ScrollController();
+  SimpleAnimation _riveUpdateController = SimpleAnimation('idle');
   ChatScreenWidgetModel(ChatScreenModel model) : super(model);
 
   @override
@@ -73,15 +75,23 @@ class ChatScreenWidgetModel extends WidgetModel<ChatScreen, ChatScreenModel>
 
   @override
   updateMsg() async {
+    _riveUpdateController = SimpleAnimation('active');
     try {
       _messagesController.loading();
       await model.loadMessages();
       _messagesController.content(model.messages);
+      _riveUpdateController = SimpleAnimation('idle');
     } catch (e) {
       _messagesController
           .error(Exception('Произошла ошибка попробуйте обновить чат'));
     }
   }
+
+  @override
+  get riveController => SimpleAnimation('active');
+
+  @override
+  get riveUpdateController => _riveUpdateController;
 }
 
 abstract class IChatScreenWidgetModel extends IWidgetModel {
@@ -90,6 +100,10 @@ abstract class IChatScreenWidgetModel extends IWidgetModel {
   get msgController;
 
   get listViewController;
+
+  get riveController;
+
+  get riveUpdateController;
   updateMsg();
 
   ListenableState<EntityState<List<ChatMessageDto>>> get messagesState;

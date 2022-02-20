@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
 import 'package:surf_practice_chat_flutter/presentation/screens/chat_screen_widget_model.dart';
 
 class NicknameAppBar extends StatelessWidget {
@@ -12,10 +13,23 @@ class NicknameAppBar extends StatelessWidget {
           padding: const EdgeInsets.only(
             right: 20.0,
           ),
-          child: IconButton(
-            onPressed: () => wm.updateMsg(),
-            icon: const Icon(Icons.refresh),
+          child: InkWell(
+            onTap: () => wm.updateMsg(),
+            child: Container(
+              width: 50,
+              height: 50,
+              child: RiveAnimation.asset(
+                'assets/rive/2.riv',
+                controllers: [wm.riveUpdateController],
+                onInit: (_) {},
+              ),
+            ),
           ),
+
+          // IconButton(
+          //   onPressed: () => wm.updateMsg(),
+          //   icon: const Icon(Icons.refresh),
+          // ),
         )
       ],
       title: TextFormField(
@@ -24,11 +38,12 @@ class NicknameAppBar extends StatelessWidget {
           color: Colors.white,
         ),
         decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: 'Введите ник',
-            hintStyle: TextStyle(
-              color: Colors.white.withOpacity(0.5),
-            )),
+          border: InputBorder.none,
+          hintText: 'Введите ник',
+          hintStyle: TextStyle(
+            color: Colors.white.withOpacity(0.5),
+          ),
+        ),
       ),
     );
   }
