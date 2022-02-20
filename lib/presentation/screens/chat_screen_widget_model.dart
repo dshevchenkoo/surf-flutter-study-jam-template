@@ -95,7 +95,7 @@ class ChatScreenWidgetModel extends WidgetModel<ChatScreen, ChatScreenModel>
 }
 
 abstract class IChatScreenWidgetModel extends IWidgetModel {
-  get nickNameController;
+  TextEditingController get nickNameController;
   get sizeWidth;
   get msgController;
 
