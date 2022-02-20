@@ -78,7 +78,7 @@ class Message extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
-              color: Colors.deepPurple.withOpacity(0.5),
+              color: Colors.deepPurple.withOpacity(0.1),
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
