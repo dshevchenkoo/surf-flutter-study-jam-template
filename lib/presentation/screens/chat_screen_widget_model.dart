@@ -57,9 +57,15 @@ class ChatScreenWidgetModel extends WidgetModel<ChatScreen, ChatScreenModel>
 
   @override
   sendMsg() async {
-    await model.sendMsg(msg: _msgController.text, username: _controller.text);
-    _msgController.clear();
-    _messagesController.content(model.messages);
+    try {
+      await model.sendMsg(msg: _msgController.text, username: _controller.text);
+      _msgController.clear();
+      _messagesController.content(model.messages);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Произошла ошибка при отправке сообщения"),
+      ));
+    }
   }
 
   @override
@@ -67,10 +73,14 @@ class ChatScreenWidgetModel extends WidgetModel<ChatScreen, ChatScreenModel>
 
   @override
   updateMsg() async {
-    _messagesController.loading();
-    await model.loadMessages();
-
-    _messagesController.content(model.messages);
+    try {
+      _messagesController.loading();
+      await model.loadMessages();
+      _messagesController.content(model.messages);
+    } catch (e) {
+      _messagesController
+          .error(Exception('Произошла ошибка попробуйте обновить чат'));
+    }
   }
 }
 
