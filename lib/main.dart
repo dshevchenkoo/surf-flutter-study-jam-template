@@ -1,21 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elementary/elementary.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:surf_practice_chat_flutter/data/chat/repository/firebase.dart';
+import 'package:provider/provider.dart';
 import 'package:surf_practice_chat_flutter/firebase_options.dart';
-import 'package:surf_practice_chat_flutter/screens/chat.dart';
+import 'package:surf_practice_chat_flutter/presentation/screens/chat_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform(
-      androidKey: 'enter android key here',
-      iosKey: 'enter ios key here',
-      webKey: 'enter web key here',
+      androidKey: 'AIzaSyAgleMBLWGeOQHnGpAyCMDsxoz4CdK46Fg',
+      iosKey: 'AIzaSyCn005OVun4NhDkvTpjhNjhTvAQPUPgGHU',
+      webKey: 'AIzaSyDaj-LxNcWd4Onq0WcjsB7c-6O3F-onHgU',
     ),
   );
-  
+
   runApp(const MyApp());
 }
 
@@ -24,16 +25,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chatRepository = ChatRepositoryFirebase(FirebaseFirestore.instance);
-
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorSchemeSeed: Colors.deepPurple,
         useMaterial3: true,
       ),
-      home: ChatScreen(
-        chatRepository: chatRepository,
+      home: Provider<ErrorHandler>(
+        create: (_) => ChatErrorHandler(),
+        child: ChatScreen(),
       ),
     );
+  }
+}
+
+class ChatErrorHandler implements ErrorHandler {
+  @override
+  void handleError(Object error) {
+    if (kDebugMode) {
+      print(error);
+    }
   }
 }
