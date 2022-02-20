@@ -38,25 +38,36 @@ class Message extends StatelessWidget {
         const SizedBox(
           width: 20,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              currentUser.name,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
+        Container(
+          padding: EdgeInsets.all(15),
+          decoration: BoxDecoration(
+            color: Colors.deepPurple.withOpacity(0.5),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                currentUser.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: wm.sizeWidth - 200,
-              child: Text(
-                currentMsg.message,
+              const SizedBox(
+                height: 10,
               ),
-            ),
-          ],
+              Container(
+                width: wm.sizeWidth - 200,
+                child: Text(
+                  currentMsg.message,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
